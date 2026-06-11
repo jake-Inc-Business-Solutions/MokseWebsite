@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next"
 import { Open_Sans } from "next/font/google";
 // import Footer from "@/components/common/footer";
 import Footer from "@/app/(Admin Dashboard)/components/footer";

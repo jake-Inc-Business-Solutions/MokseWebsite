@@ -2,19 +2,16 @@ services:
   web:
     build:
       context: .
-      target: ${BUILD_TARGET:-dev}          # dev | runner
-    image: k-web:${BUILD_TARGET:-dev}
+      dockerfile: Dockerfile
+    container_name: mokse-web
+    restart: unless-stopped
     ports:
       - "${APP_PORT:-3000}:3000"
     environment:
-      NODE_ENV: ${NODE_ENV:-development}
-      NEXT_TELEMETRY_DISABLED: "1"
-    volumes:
-      - ${DEV_MOUNT:-.:/app}
-      # - ${DEV_NODEMODULES_MOUNT:-/app/node_modules} # this is thought to be handled in Dockerfile now
-    command: ${APP_CMD:-npm run dev}
-    depends_on:
-      mongo:
-        condition: service_healthy
+      - NODE_ENV=${NODE_ENV:-production}
+      # Add your new Notion API variables here
+      - NOTION_API_KEY=${NOTION_TOKEN}
+      - NOTION_DATABASE_ID=${NOTION_DATABASE_KEY}
+    # Optional: If you want to keep a dev profile for hot-reloading
     profiles:
-      - ${COMPOSE_PROFILES:-dev}
+      - prod"
